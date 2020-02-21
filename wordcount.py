@@ -52,6 +52,36 @@ import sys
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 
+def helper_function(filename):
+    dct = { }    
+    with open(filename, "r") as f:       
+
+        for story in f:
+            shortlist = story.lower().split()
+
+            for fullstory in shortlist:
+                if fullstory in dct:
+                    dct[fullstory] += 1
+                else:
+                    dct[fullstory] = 1
+
+    return dct
+# helper_function("small.txt")
+
+def print_words(filename):
+    word_count = helper_function(filename)
+    for word in word_count:
+        print(word, word_count[word])
+# print_words("small.txt")
+
+def get_count(word_count_tuple):
+    return word_count_tuple[1]
+
+def print_top(filename):
+    word_count = helper_function(filename)
+    items = sorted(word_count.items(), key = get_count, reverse = True)
+    for item in items[:20]:
+        print item[0], item[1]        
 
 def main():
     if len(sys.argv) != 3:
